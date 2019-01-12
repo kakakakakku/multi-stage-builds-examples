@@ -1,0 +1,10 @@
+FROM golang:alpine3.8 AS builder
+
+RUN apk add --no-cache git
+RUN go get github.com/golang/example/hello
+
+FROM alpine:3.8
+
+COPY --from=builder /go/bin/hello /usr/local/bin/
+
+ENTRYPOINT ["hello"]
